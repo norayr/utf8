@@ -1,6 +1,6 @@
 MODULE Utf8;
 
-IMPORT SYSTEM;
+IMPORT Out, SYSTEM;
 
 TYPE
   Char* = LONGINT;  (* Unicode code point *)
@@ -89,6 +89,29 @@ BEGIN
     RETURN FALSE
   END
 END Next;
+
+PROCEDURE OutChar*(u: Char);
+VAR
+  buf: ARRAY 8 OF CHAR;
+  n: INTEGER;
+BEGIN
+  Chr(u, buf, n);
+  buf[n] := 0X;
+  Out.String(buf)
+END OutChar;
+
+PROCEDURE OutString*(VAR s(*-*): ARRAY OF CHAR);
+VAR
+  pos: INTEGER;
+  u: Char;
+BEGIN
+  pos := 0;
+  WHILE s[pos] # 0X DO
+    IF Next(s, pos, u) THEN
+      OutChar(u)
+    END
+  END
+END OutString;
 
 END Utf8.
 

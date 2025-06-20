@@ -28,5 +28,9 @@ BEGIN
       Out.String(buf)
     END
   END;
-  Out.Ln
+  Out.Ln;
+
+  (* Or like this *)
+  Utf8.OutString(s); Out.Ln;
+
 END Utf8Test.
